@@ -38,7 +38,7 @@ export async function handleDirectoryWebhook(request, env, ctx) {
       
       // Get the project name for this directory
       // The naming convention is directory-[directoryId]
-      const projectName = `directory-${directoryId}`;
+      const projectName = `ncstudio-directory-${directoryId}`;
       
       // Trigger the build
       const buildResult = await triggerPagesBuild(apiToken, accountId, projectName);
@@ -83,11 +83,14 @@ export async function handleDirectoryWebhook(request, env, ctx) {
    * Extract the directory from the webhook payload
    */
   function extractDirectoryFromPayload(payload) {
-    // Handle different payload structures based on NocoDB webhook format
+    // Case 1: Directory table changes - look for Identifier field
+    if (payload.table === 'm823s0ww0l4mekb' && payload.data) {
+      return payload.data.Identifier || payload.data.identifier || payload.data.id;
+    }
     
-    // Check for direct directory information in data
+    // Case 2: Common pattern for Listings and Landing Pages
     if (payload.data) {
-      // Try different field names based on NocoDB configuration
+      // Try standard field names
       if (payload.data.directory) return payload.data.directory;
       if (payload.data.Directory) return payload.data.Directory;
       if (payload.data['Directory Identifier']) return payload.data['Directory Identifier'];
@@ -101,10 +104,13 @@ export async function handleDirectoryWebhook(request, env, ctx) {
       }
     }
     
-    // Fallback: try to extract from specific fields
-    // This depends on your NocoDB schema
+    // Table-specific fallbacks by table ID
     if (payload.table === 'mvy1lrp2wr35vo0' && payload.data && payload.data['Directory Identifier']) {
       return payload.data['Directory Identifier']; 
+    }
+    
+    if (payload.table === 'mbrnluso1gxfwd4' && payload.data && payload.data['Directory Identifier']) {
+      return payload.data['Directory Identifier'];
     }
     
     // Could not determine directory
