@@ -109,11 +109,11 @@ export async function handleDirectoryWebhook(request, env, ctx) {
  * Extract the directory from the webhook payload
  */
 function extractDirectoryFromPayload(payload) {
-  if (payload.table === directoriesTableId) {
+  if (getTableIdFromPayload(payload) === directoriesTableId) {
     return getDirectoryIdentifierFromPayload(payload, "Identifier");
-  } else if (payload.table === listingsTableId) {
+  } else if (getTableIdFromPayload(payload) === listingsTableId) {
     return getDirectoryIdentifierFromPayload(payload, "Directory Identifier");
-  } else if (payload.table === landingPagesTableId) {
+  } else if (getTableIdFromPayload(payload) === landingPagesTableId) {
     return getDirectoryIdentifierFromPayload(payload, "Directory Identifier");
   }
 
@@ -159,6 +159,16 @@ async function triggerPagesBuild(apiToken, accountId, projectName) {
       error: error.message,
     };
   }
+}
+
+function getTableIdFromPayload(payload) {
+  // Check if the payload contains a table ID
+  if (payload.data['table_id']) {
+    return payload.data['table_id'];
+  }
+
+  // If not found, return null
+  return null;
 }
 
 function getDirectoryIdentifierFromPayload(
