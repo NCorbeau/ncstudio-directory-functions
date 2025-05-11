@@ -15,6 +15,7 @@ export async function handleDirectoryWebhook(request, env, ctx) {
     const directoryId = extractDirectoryFromPayload(payload);
 
     if (!directoryId) {
+      console.log("Could not determine directory from payload");
       return new Response(
         JSON.stringify({
           success: false,
@@ -34,6 +35,7 @@ export async function handleDirectoryWebhook(request, env, ctx) {
     const accountId = env.CF_ACCOUNT_ID;
 
     if (!apiToken || !accountId) {
+      console.error("Missing Cloudflare API credentials");
       return new Response(
         JSON.stringify({
           success: false,
@@ -57,6 +59,7 @@ export async function handleDirectoryWebhook(request, env, ctx) {
       accountId,
       projectName
     );
+    console.log("Build result:", buildResult);
 
     if (!buildResult.success) {
       return new Response(
