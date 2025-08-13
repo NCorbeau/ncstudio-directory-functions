@@ -1,6 +1,7 @@
 name = "ncstudio-directory-functions"
 compatibility_date = "2024-05-07"
 main = "src/index.js"
+keep_vars = true
 
 [observability]
 enabled = true
