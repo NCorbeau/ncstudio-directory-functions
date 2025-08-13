@@ -81,15 +81,15 @@ export async function handleDirectoryRequest(request, env, ctx) {
         domain: directory.Domain,
         theme: directory.Theme || 'default',
         availableLayouts: directory.Available_Layouts?.split(',') || ['Card'],
-        defaultLayout: directory.Default_Layout || 'Card',
-        primaryColor: directory.Primary_Color || '#3366cc',
-        secondaryColor: directory.Secondary_Color,
-        logo: directory.Logo,
-        categories: safeParseJSON(directory.Categories, []),
-        metaTags: safeParseJSON(directory.Meta_Tags, {}),
-        socialLinks: safeParseJSON(directory.Social_Links, []),
-        deployment: safeParseJSON(directory.Deployment, {}),
-        urlSegment: safeParseJSON(directory.Url_Segment, {})
+        defaultLayout: directory['Default Layout'] || 'Card',
+        primaryColor: directory['Primary Color'] || '#3366cc',
+        secondaryColor: directory['Secondary Color'],
+        logo: directory['Logo'],
+        categories: safeParseJSON(directory['Categories'], []),
+        metaTags: safeParseJSON(directory['Meta Tags'], {}),
+        socialLinks: safeParseJSON(directory['Social Links'], []),
+        deployment: safeParseJSON(directory['Deployment'], {}),
+        urlSegment: safeParseJSON(directory['Url Segment'], {})
       };
       
       // Return the directory data
