@@ -4,10 +4,3 @@ main = "src/index.js"
 
 [observability]
 enabled = true
-
-# Environment variables configuration
-[vars]
-NOCODB_API_URL = "https://your-nocodb-instance.com/api/v2"
-NOCODB_AUTH_TOKEN = "nocodb-token"
-CF_ACCOUNT_ID = "your-account-id"
-CF_API_TOKEN = "cf-token"
