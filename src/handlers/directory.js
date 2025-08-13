@@ -88,7 +88,8 @@ export async function handleDirectoryRequest(request, env, ctx) {
         categories: safeParseJSON(directory.Categories, []),
         metaTags: safeParseJSON(directory.Meta_Tags, {}),
         socialLinks: safeParseJSON(directory.Social_Links, []),
-        deployment: safeParseJSON(directory.Deployment, {})
+        deployment: safeParseJSON(directory.Deployment, {}),
+        urlSegment: safeParseJSON(directory.Url_Segment, {})
       };
       
       // Return the directory data
